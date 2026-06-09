@@ -1,0 +1,32 @@
+{
+  "builtInNodes": [
+    {
+      "type": "ResolutionSelector"
+    },
+    {
+      "type": "83e6e004-48ea-408e-9024-eb49c3d7dc14"
+    },
+    {
+      "type": "MarkdownNote"
+    },
+    {
+      "type": "MarkdownNote"
+    },
+    {
+      "type": "PreviewAny"
+    },
+    {
+      "type": "f5f04613-ee09-4cd9-9ada-a880360891d4"
+    },
+    {
+      "type": "SaveImage"
+    },
+    {
+      "type": "MarkdownNote"
+    }
+  ],
+  "customNodes": {},
+  "models": [],
+  "assets": [],
+  "issues": []
+}
