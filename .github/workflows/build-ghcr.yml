@@ -45,5 +45,7 @@ jobs:
           push: true
           labels: |
             org.opencontainers.image.source=https://github.com/IAmAshishNegi/comfyui-image-ideogram4-t2i
-            org.opencontainers.image.description=RunPod ComfyUI Ideogram4 worker with runtime model downloads
-          tags: ghcr.io/iamashishnegi/comfyui-image-ideogram4-t2i:runtime-download
+            org.opencontainers.image.description=RunPod ComfyUI Ideogram4 worker with baked model downloads
+          tags: |
+            ghcr.io/iamashishnegi/comfyui-image-ideogram4-t2i:baked-models
+            ghcr.io/iamashishnegi/comfyui-image-ideogram4-t2i:latest
