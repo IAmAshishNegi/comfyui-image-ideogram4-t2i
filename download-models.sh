@@ -1,20 +1,39 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+log() {
+  printf '[model-download] %s %s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$*"
+}
+
+show_disk() {
+  log "disk usage:"
+  df -h / /comfyui || true
+}
+
 download_if_missing() {
   local url="$1"
   local path="$2"
+  local label
+  label="$(basename "$path")"
 
   if [ -s "$path" ]; then
-    echo "Model already present: $path"
+    log "already present: ${label} -> ${path} ($(du -h "$path" | awk '{print $1}'))"
     return
   fi
 
   mkdir -p "$(dirname "$path")"
-  echo "Downloading $(basename "$path")"
-  curl -L --fail --retry 8 --retry-delay 10 --retry-all-errors -o "${path}.tmp" "$url"
+  rm -f "${path}.tmp"
+  log "starting download: ${label}"
+  log "url: ${url}"
+  log "target: ${path}"
+  show_disk
+  curl -L --fail --retry 8 --retry-delay 10 --retry-all-errors --connect-timeout 30 --progress-bar -o "${path}.tmp" "$url"
   mv "${path}.tmp" "$path"
+  log "finished download: ${label} ($(du -h "$path" | awk '{print $1}'))"
+  show_disk
 }
+
+log "model download/check start"
 
 download_if_missing \
   "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors" \
@@ -31,3 +50,5 @@ download_if_missing \
 download_if_missing \
   "https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_8b_fp8_scaled.safetensors" \
   "/comfyui/models/text_encoders/qwen3vl_8b_fp8_scaled.safetensors"
+
+log "model download/check complete"

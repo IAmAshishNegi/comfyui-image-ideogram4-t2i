@@ -1,7 +1,6 @@
-# Corrected image for the ComfyUI Wizard image_ideogram4_t2i submission.
-# The Wizard-generated Dockerfile only inherited the clean worker base. This
-# image installs the model files referenced by the expanded API workflow and
-# keeps a startup hook as a quick integrity check before the handler starts.
+# Diagnostic image for the ComfyUI Wizard image_ideogram4_t2i submission.
+# Keep the Docker image thin and download/check model files at worker startup
+# so RunPod container logs show exactly where startup gets stuck.
 FROM runpod/worker-comfyui:5.8.4-base
 
 ENV MODE_TO_RUN=serverless
@@ -19,7 +18,5 @@ COPY download-models.sh /usr/local/bin/download-models.sh
 COPY start-with-models.sh /usr/local/bin/start-with-models.sh
 
 RUN chmod +x /usr/local/bin/download-models.sh /usr/local/bin/start-with-models.sh
-
-RUN /usr/local/bin/download-models.sh
 
 CMD ["/usr/local/bin/start-with-models.sh"]
