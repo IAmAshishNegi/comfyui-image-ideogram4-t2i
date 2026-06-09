@@ -5,10 +5,6 @@ FROM runpod/worker-comfyui:5.8.4-base
 
 ENV MODE_TO_RUN=serverless
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates curl \
-    && rm -rf /var/lib/apt/lists/*
-
 RUN mkdir -p \
     /comfyui/models/vae \
     /comfyui/models/diffusion_models \
